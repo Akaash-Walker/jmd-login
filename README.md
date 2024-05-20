@@ -1,4 +1,5 @@
 **JMD Industries Login App**
+
 This is a demo/example login application created for JMD Industries using PHP, Laravel, and Tailwind CSS.
 
 Features:
