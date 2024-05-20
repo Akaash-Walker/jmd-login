@@ -17,7 +17,9 @@
 <body class="font-sans text-gray-900 antialiased bg-red-500 dark:bg-red-800">
 <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-white">
     <div>
-        <img src="{{ asset('jmd_industries_logo_horizontal.png') }}" alt="JMD Industries Logo" class="scale-75">
+        <a href="https://jmd.industries/" target="_blank">
+            <img src="{{ asset('jmd_industries_logo_horizontal.png') }}" alt="JMD Industries Logo" class="scale-75">
+        </a>
     </div>
     <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-m-rgba shadow-md overflow-hidden sm:rounded-lg">
         {{ $slot }}
