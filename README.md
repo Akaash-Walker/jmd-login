@@ -11,3 +11,5 @@ Instructions:
 1. Clone the repository.
 2. Run 'php artisan serve' to start the PHP server.
 3. Run 'npm run dev' to compile and load Tailwind CSS.
+
+This is a modification to check remote connection.
