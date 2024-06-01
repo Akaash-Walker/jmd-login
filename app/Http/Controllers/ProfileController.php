@@ -57,4 +57,11 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    // greeting for dashboard
+    public function greeting(): View
+    {
+        $user = Auth::user();
+        return view('dashboard', ['user' => $user]);
+    }
 }

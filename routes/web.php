@@ -22,6 +22,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('/jeff-todo', JeffToDoController::class);
 });
 
-Route::post('/saveItem', [TodoListController::class, 'saveItem'])->name('saveItem');
+Route::post('/saveItem', [TodoListController::class, 'store'])->name('saveItem');
+
+// routes/web.php
+
+// route for getting user's name
+Route::get('/dashboard', [ProfileController::class, 'greeting'])->middleware(['auth', 'verified'])->name('dashboard');
+
 
 require __DIR__ . '/auth.php';
