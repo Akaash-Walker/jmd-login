@@ -21,21 +21,46 @@
             </div>
         </div>
     </div>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <form method="post" action="{{ route('saveItem') }}" accept-charset="UTF-8"
-                  class="max-w-lg mx-auto p-4 border rounded-lg bg-white shadow-md">
-                {{ csrf_field() }}
-                    <div class="mb-4">
-                        <label for="name" class="block text-gray-700 font-bold mb-2">Todo</label>
-                        <input type="text" id="name" name="name" required
-                               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                    </div>
-                    <button type="submit"
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                        Submit
-                    </button>
-                </form>
+    <div class="flex">
+        <div class="flex-1 m-0 p-0">
+            <div class="py-0">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <form method="post" action="{{ route('saveItem') }}" accept-charset="UTF-8"
+                          class="max-w-lg mx-auto p-4 border rounded-lg bg-white shadow-md">
+                        {{ csrf_field() }}
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 font-bold mb-2">Add a todo</label>
+                            <input type="text" id="name" name="name" required
+                                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        </div>
+                        <x-primary-button>{{ __('Submit') }}</x-primary-button>
+                    </form>
+                </div>
             </div>
         </div>
+        <div class="flex-1 m-0 p-0">
+            <div class="py-0">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div class="max-w-lg mx-auto p-4 border rounded-lg bg-white shadow-md">
+                        <label for="name" class="block text-gray-700 text-lg font-bold mb-2">Things to do</label>
+                        @if(count($listItems) == 0)
+                            <p>Nothing!</p>
+                        @endif
+                        @foreach($listItems as $listItem)
+                            <div class="mb-4 flex justify-between items-center">
+                                <p class="text-gray-700">{{ $listItem->name }}</p>
+                                <form method="POST" action="{{ route('dashboard.delete', $listItem->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <x-primary-button>{{ __('Delete') }}</x-primary-button>
+                                </form>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </x-app-layout>

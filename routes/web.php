@@ -22,12 +22,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('/jeff-todo', JeffToDoController::class);
 });
 
+// route for saving items to db
 Route::post('/saveItem', [TodoListController::class, 'store'])->name('saveItem');
 
-// routes/web.php
+// route for showing items on dashboard with user greeting
+Route::get('/dashboard', [TodoListController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-// route for getting user's name
-Route::get('/dashboard', [ProfileController::class, 'greeting'])->middleware(['auth', 'verified'])->name('dashboard');
-
+// route for deleting items using id
+Route::delete('/items/{id}', [TodoListController::class, 'delete'])->name('dashboard.delete');
 
 require __DIR__ . '/auth.php';
