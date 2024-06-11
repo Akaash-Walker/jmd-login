@@ -43,23 +43,28 @@
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="max-w-lg mx-auto p-4 border rounded-lg bg-white shadow-md">
                         <label for="name" class="block text-gray-700 text-lg font-bold mb-2">Things to do</label>
-                        @if(isset($listItems) && count($listItems) == 0)
-                            <p>Nothing yet...</p>
-                        @endif
                         @foreach($listItems as $listItem)
                             <div class="mb-4 flex justify-between items-center">
-                                <p class="text-gray-700">{{ $listItem->name }}</p>
-                                <div class="mb-4 flex justify-between">
-                                    <form method="POST" action="{{ route('dashboard.edit', $listItem->id) }}">
-                                        @csrf
-                                        <x-primary-button>{{ __('Edit') }}</x-primary-button>
-                                    </form>
-                                    <form method="POST" action="{{ route('dashboard.delete', $listItem->id) }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <x-primary-button>{{ __('Delete') }}</x-primary-button>
-                                    </form>
-                                </div>
+                                <form method="POST" action="{{ route('dashboard.save', $listItem->id) }}"
+                                      class="flex items-center">
+                                    @csrf
+                                    @if($listItem->id == $id)
+                                        <input type="text" id="name" name="name" value="{{ $listItem->name }}"
+                                               required
+                                               class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                               style="width: 200px;">
+                                        <div class="ml-2 flex space-x-2">
+                                            <x-primary-button>{{ __('Save') }}</x-primary-button>
+                                        </div>
+                                    @else
+                                        <p class="text-gray-700">{{ $listItem->name }}</p>
+                                    @endif
+                                </form>
+                                <form method="POST" action="{{ route('dashboard.delete', $listItem->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <x-primary-button>{{ __('Delete') }}</x-primary-button>
+                                </form>
                             </div>
                         @endforeach
                     </div>

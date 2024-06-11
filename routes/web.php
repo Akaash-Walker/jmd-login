@@ -31,4 +31,8 @@ Route::get('/dashboard', [TodoListController::class, 'index'])->middleware(['aut
 // route for deleting items using id
 Route::delete('/items/{id}', [TodoListController::class, 'delete'])->name('dashboard.delete');
 
+Route::post('/edit/{id}', [TodoListController::class, 'edit'])->name('dashboard.edit');
+
+Route::post('/save/{id}', [TodoListController::class, 'save'])->name('dashboard.save');
+
 require __DIR__ . '/auth.php';

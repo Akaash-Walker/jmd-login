@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ListItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use mysql_xdevapi\Exception;
 
 class TodoListController extends Controller
 {
@@ -30,7 +31,7 @@ class TodoListController extends Controller
     public function index()
     {
         // Fetch list items
-        $listItems = ListItem::all();
+        $listItems = ListItem::all() ?? collect();
 
         // authenticate user
         $user = Auth::user();
@@ -46,11 +47,11 @@ class TodoListController extends Controller
     {
 
         // get all list items
-        $listItems = ListItem::all();
+        $listItems = ListItem::all() ?? collect();
 
         // loop over all list items and find the one that matches with id
-        foreach ($listItems as $item){
-            if ($item->id == $id){
+        foreach ($listItems as $item) {
+            if ($item->id == $id) {
                 // delete item if id matches
                 $item->delete();
                 // stop search
@@ -62,4 +63,35 @@ class TodoListController extends Controller
         return redirect()->route('dashboard')->with('success', 'Item deleted successfully.');
     }
 
+    public function edit($id)
+    {
+        $user = Auth::user();
+        $listItems = ListItem::all() ?? collect();
+        foreach ($listItems as $listItem) {
+            if ($listItem->id == $id) {
+                // return view item if id matches
+                return view('edit', ['listItem' => $listItem, 'user' => $user, 'listItems' => $listItems, 'id' => $id]);
+            }
+        }
+        throw new Exception();
+    }
+
+    public function save(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+        $listItems = ListItem::all();
+        foreach ($listItems as $listItem) {
+            if ($listItem->id == $id) {
+                $listItem->name = $request->input('name');
+                $listItem->save();
+                $itemId = $listItem->id;
+
+                // Redirect back to the dashboard route with success message and item ID
+                return redirect()->route('dashboard')->with('success', 'Item saved successfully.');
+            }
+        }
+        throw new Exception();
+    }
 }
