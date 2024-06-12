@@ -18,7 +18,7 @@ class TodoListController extends Controller
         // Fetch list items
         // $listItems = ListItem::all() ?? collect();
         // Note: listItem::all() will return an empty collection if it finds nothing, no need for the conditional check
-        $listItems = ListItem::all(); // also, this is fine for short lists but may want to use pagination        
+        $listItems = ListItem::all(); // also, this is fine for short lists but may want to use pagination
 
         // Pass the list items and user to the view
         return view('dashboard', [
@@ -77,7 +77,7 @@ class TodoListController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
+    /*    $request->validate([
             'name' => 'required|string|max:255',
         ]);
 
@@ -91,7 +91,7 @@ class TodoListController extends Controller
                 // Redirect back to the dashboard route with success message and item ID
                 return redirect()->route('dashboard')->with('success', 'Item saved successfully.');
             }
-        }
+        }*/
 
         // Validate the request data
         $validatedData = $request->validate([
